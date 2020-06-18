@@ -185,23 +185,15 @@ public class UserController {
 			User usr=cr.getUser();
 			usr.setFirstName(user.getFirstName());
 			usr.setLastName(user.getLastName());
-			
-			
-			/*Salviamo credentials(usando nuovo metodo e passando cr che sono le credenziali corrette)
-			 * NOTA: crazie a CASCADE.ALL salva anche lo user.*/
 			cr.setUser(usr);
-			this.credentialsService.updateCredential(cr);
-			
+			this.userService.saveUser(usr);			
 			/*Dopo aver salvato sostituiamo il campo password di cr con [PROTECTED]
 			 * e aggiorniamo i dati di sessione.*/
 			cr.setPassword("[PROTECTED]");
 			this.sessionData.setLoggedUser(usr);
 			this.sessionData.setCredentials(cr);
-
-			
 			return "userUpdateSuccessful";
 		}
 		return "profileUpdate";
 	}
-
 }
